@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tax Services | Hilde Tax Services</title>
+<meta name="description" content="Full-service tax help: individual &amp; business tax preparation, IRS audits, tax resolution, amended returns, ITIN, identity verification, prior-year returns, and bookkeeping.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body class="page-inner">
+
+<!-- ===== Utility bar ===== -->
+<!-- "Next deadline" is filled in by main.js from tax-reminders-data.js; social hrefs are placeholders like the footer's -->
+<div class="utility-bar">
+  <div class="wrap utility-bar__inner">
+    <p class="util-next" hidden></p>
+    <nav class="utility-bar__actions" aria-label="Quick links">
+      <a href="tax-reminders.html" class="util-page-link">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+        Tax Reminders
+      </a>
+      <span class="util-bar__divider" aria-hidden="true">|</span>
+      <a href="#facebook" class="social-icon" aria-label="Facebook"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+      <a href="#tiktok" class="social-icon" aria-label="TikTok"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.34 6.34 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.73a8.17 8.17 0 0 0 4.78 1.52V6.8a4.85 4.85 0 0 1-1.01-.11z"/></svg></a>
+      <a href="#instagram" class="social-icon" aria-label="Instagram"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+      <a href="#twitter" class="social-icon" aria-label="X (Twitter)"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+    </nav>
+  </div>
+</div>
+
+<!-- ===== Header ===== -->
+<header class="site-header">
+  <div class="wrap">
+
+    <!-- Logo - Far Left -->
+    <a href="index.html"
+       class="logo"
+       aria-label="Hilde Tax Services home">
+
+      <img
+        src="higgsfield-assets/logo-mark.png"
+        alt=""
+        width="56"
+        height="56"
+      >
+
+      <span class="logo-text">
+        <strong>Hilde Tax Services</strong>
+        <span>Quality &middot; Trust &middot; Expertise</span>
+      </span>
+    </a>
+
+    <!-- Navigation - Center -->
+    <nav class="nav" aria-label="Main navigation">
+      <a href="index.html">Home</a>
+      <a href="services.html" class="active" aria-current="page">Services</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+
+    <!-- Free Quote - Far Right -->
+    <div class="header-cta">
+      <a href="contact.html" class="btn btn-primary" data-quote>
+
+        <!--svg
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+          <path d="M14 2v6h6M8 13h8M8 17h8"/>
+        </svg-->
+
+        <span>Free Quote</span>
+        <!--span class="nav-cta-arrow" aria-hidden="true">&rarr;</span-->
+      </a>
+
+
+      <a href="tax-intake.html" class="btn btn-tax-intake">
+        <span>Start My Taxes</span>
+      </a>
+
+    </div>
+    <!-- Free Quote - Far Right -->
+
+
+
+
+
+    <!-- Mobile Menu -->
+    <button
+      class="menu-toggle"
+      type="button"
+      aria-label="Open menu"
+      aria-expanded="false"
+    >
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+  </div>
+</header>
+
+
+<!-- ===== Page hero ===== -->
+<section class="hero page-hero">
+  <div class="wrap reveal">
+    <div class="crumbs"><a href="index.html">Home</a> / Services</div>
+    <span class="eyebrow">Our services</span>
+    <h1>Everything you need to stay compliant and <span>keep more of your money</span>.</h1>
+    <p class="lede">Here&rsquo;s what we handle for individuals and businesses. Don&rsquo;t see your situation? Ask us. We&rsquo;re happy to talk it through.</p>
+    <div class="hero-actions">
+      <a href="contact.html" class="btn btn-primary" data-quote>
+        <span>Get a Free Quote</span>
+        <span aria-hidden="true">&rarr;</span>
+      </a>
+      <a href="tel:+16827065182" class="btn btn-ghost">
+        <span>Call or Text Today</span>
+        <span aria-hidden="true">&rarr;</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Detailed service list ===== -->
+<section class="section" aria-labelledby="list-title">
+  <div class="wrap">
+    <div class="section-head center reveal">
+      <span class="eyebrow eyebrow-center">What we handle</span>
+      <h2 id="list-title">Tax help for <span>every situation</span></h2>
+    </div>
+    <div class="svc-list reveal">
+
+      <article class="svc-row" id="svc-prep">
+        <span class="svc-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l5 5v13a1 1 0 01-1 1H7a1 1 0 01-1-1V4a1 1 0 011-1z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg></span>
+        <div>
+          <h3>Individual &amp; Business Tax Preparation</h3>
+          <p>We prepare and e-file personal, family, self-employed, and business returns. We dig into your situation to find every deduction and credit you qualify for, and file securely as an IRS authorized e-file provider.</p>
+        </div>
+      </article>
+
+      <article class="svc-row" id="svc-audits">
+        <span class="svc-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></span>
+        <div>
+          <h3>Tax Audits &amp; IRS Assistance</h3>
+          <p>Got an audit letter or IRS notice? Don&rsquo;t panic. We explain what the IRS is asking for, organize your documents, and respond correctly. We stay with you until it&rsquo;s settled.</p>
+        </div>
+      </article>
+
+      <article class="svc-row" id="svc-resolution">
+        <span class="svc-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></span>
+        <div>
+          <h3>Tax Resolution &amp; IRS Issues</h3>
+          <p>Owe back taxes or facing penalties, liens, or wage garnishment? We review your options, including payment plans and other relief, and work toward a resolution that gets you back in good standing with the IRS.</p>
+        </div>
+      </article>
+
+      <article class="svc-row" id="svc-amended">
+        <span class="svc-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 9.5V20h14V9.5"/><path d="M10 20v-5h4v5M16 6.5V4h2v4"/></svg></span>
+        <div>
+          <h3>Amended Returns</h3>
+          <p>Made an error on a past return, or missed a credit? We prepare and file an amended return to fix it, so you can recover refunds you left on the table.</p>
+        </div>
+      </article>
+
+      <article class="svc-row" id="svc-itin">
+        <span class="svc-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg></span>
+        <div>
+          <h3>ITIN &amp; Identity Verification</h3>
+          <p>We help you apply for or renew an Individual Taxpayer Identification Number (ITIN) and clear IRS identity verification, so your return isn&rsquo;t held up.</p>
+        </div>
+      </article>
+
+      <article class="svc-row" id="svc-prior">
+        <span class="svc-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5M12 7v5l4 2"/></svg></span>
+        <div>
+          <h3>Prior-Year &amp; Unfiled Returns</h3>
+          <p>Behind on one or more years? We prepare your unfiled returns and get you compliant again as quickly as possible.</p>
+        </div>
+      </article>
+
+      <article class="svc-row" id="svc-bookkeeping">
+        <span class="svc-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 11h.01M12 11h.01M16 11h.01M8 15h.01M12 15h.01M16 15h.01M8 18.5h.01M12 18.5h.01M16 18.5h.01"/></svg></span>
+        <div>
+          <h3>Bookkeeping</h3>
+          <p>Keep your business finances organized all year, not just at tax time. We record income and expenses and reconcile your accounts. You always know where your business stands, and filing season goes smoothly.</p>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== Advance highlight ===== -->
+<section class="section alt">
+  <div class="wrap split">
+    <div class="reveal">
+      <span class="eyebrow">Bonus benefit</span>
+      <h2>Need your refund <span>fast</span>?</h2>
+      <p class="lede" style="margin-top:1rem">Qualifying clients can receive up to a <strong>$6,000 advance</strong> on their return in as little as <strong>24 hours</strong>. We&rsquo;ll also help you claim any unclaimed refunds you&rsquo;re owed, and connect you with financial assistance where available.</p>
+    </div>
+
+    <aside class="advance-card reveal" aria-label="Refund advance offer">
+      <span class="ribbon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8z" fill="currentColor"/></svg>Eligibility required</span>
+      <div class="big">$6,000</div>
+      <p class="lead">Get up to a <strong>$6,000 advance</strong> on your return in as little as <strong>24 hours.</strong></p>
+      <ul>
+        <li>
+          <span class="adv-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9.5 14h4"/></svg></span>
+          <span><b>Free, no-obligation quote</b><small>See your options with no commitment.</small></span>
+        </li>
+        <li>
+          <span class="adv-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18M7 6h1v4M16.71 13.88l.7.71-2.82 2.82"/></svg></span>
+          <span><b>Claim returns &amp; unclaimed refunds</b><small>We help you get every dollar you&rsquo;re owed.</small></span>
+        </li>
+        <li>
+          <span class="adv-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m11 17 2 2a1 1 0 1 0 3-3"/><path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4"/><path d="m21 3 1 11h-2M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3M3 4h8"/></svg></span>
+          <span><b>Financial assistance available</b><small>Get the support you need, when you need it.</small></span>
+        </li>
+      </ul>
+      <a href="contact.html" class="btn btn-primary adv-cta">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m8 12 3 3 5-6"/></svg>
+        <span>Check Eligibility</span>
+        <span class="adv-chev" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></span>
+      </a>
+      <p class="fine"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#1B75BC"/><path d="M12 10.8v6.2" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/><circle cx="12" cy="7.3" r="1.45" fill="#fff"/></svg><span>Advance amount and timing subject to eligibility and provider approval.</span></p>
+    </aside>
+  </div>
+</section>
+
+<!-- ===== CTA banner ===== -->
+<section class="section">
+  <div class="wrap">
+    <div class="cta-banner reveal">
+      <span class="eyebrow eyebrow-center">Free, no obligation</span>
+      <h2>Not sure which service <span>you need</span>?</h2>
+      <p>Tell us about your situation and we&rsquo;ll point you in the right direction, free of charge.</p>
+      <div class="hero-actions">
+        <a href="contact.html" class="btn btn-primary" data-quote><span>Request a Free Quote</span><span aria-hidden="true">&rarr;</span></a>
+        <a href="tel:+16827065182" class="btn btn-ghost">Call/Text 682-706-5182</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <a href="index.html" class="logo" aria-label="Hilde Tax Services home">
+          <img src="higgsfield-assets/logo-mark.png" alt="" width="52" height="52">
+          <span class="logo-text"><strong>Hilde Tax Services</strong><span>Quality &middot; Trust &middot; Expertise</span></span>
+        </a>
+        <p>Tax preparation, IRS help and bookkeeping for individuals and businesses.</p>
+        <div class="badge-irs">
+          <img src="higgsfield-assets/irs-efile-badge.jpg" alt="" width="42" height="42">
+          <span><b>IRS Authorized</b><small>e-File Provider</small></span>
+        </div>
+        <!-- Social links: replace each #placeholder with Hilde's real profile URL (and add target="_blank" rel="noopener noreferrer") -->
+        <div class="footer-social" aria-label="Follow us on social media">
+          <a href="#facebook" class="social-icon" aria-label="Facebook">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          </a>
+          <a href="#tiktok" class="social-icon" aria-label="TikTok">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.34 6.34 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.73a8.17 8.17 0 0 0 4.78 1.52V6.8a4.85 4.85 0 0 1-1.01-.11z"/></svg>
+          </a>
+          <a href="#instagram" class="social-icon" aria-label="Instagram">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <a href="#twitter" class="social-icon" aria-label="X (Twitter)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <ul class="footer-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="tax-intake.html">Start My Taxes</a></li>
+          <li><a href="tax-reminders.html">Tax Reminders</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Services</h4>
+        <ul class="footer-links">
+          <li><a href="services.html#svc-prep">Tax Preparation</a></li>
+          <li><a href="services.html#svc-audits">Tax Audits &amp; IRS Help</a></li>
+          <li><a href="services.html#svc-resolution">Tax Resolution</a></li>
+          <li><a href="services.html#svc-amended">Amended Returns</a></li>
+          <li><a href="services.html#svc-itin">ITIN &amp; Verification</a></li>
+          <li><a href="services.html#svc-prior">Prior-Year Returns</a></li>
+          <li><a href="services.html#svc-bookkeeping">Bookkeeping</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Get in touch</h4>
+        <ul class="footer-contact">
+          <li><span class="footer-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M4 5c0 8 7 15 15 15l-1-4-4-1-2 2c-2-1-4-3-5-5l2-2-1-4-4-1z"/></svg></span><span><small>Call / Text</small><a href="tel:+16827065182">682-706-5182</a></span></li>
+          <li><span class="footer-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M4 7l8 6 8-6"/></svg></span><span><small>Email</small><a href="mailto:hildetaxservices@gmail.com">hildetaxservices@gmail.com</a></span></li>
+          <li><span class="footer-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 21s7-6 7-11a7 7 0 10-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></span><span><small>Office</small>1615 W. Abram Street, Suite 200-D<br>Arlington, TX 76013</span></li>
+          <li><span class="footer-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="4" y="8" width="16" height="9" rx="1.5"/><path d="M7 8V5h10v3M8 12h8"/></svg></span><span><small>Fax</small>682-252-4685</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; <span class="js-year">2026</span> Hilde Tax Services. All rights reserved.</span>
+      <span class="footer-values"><span>Confidential</span><span>Accurate</span><span>Secure</span></span>
+    </div>
+  </div>
+</footer>
+
+<script src="tax-reminders-data.js"></script>
+<script src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+/* Tax intake questionnaire. Loads after styles.css, which supplies the header, footer, hero, buttons,
+   .tile surface, .svc-ic icon disc and form fields; everything here is scoped to .intake */
+
+.intake { --line: #e4e9de; }
+
+.intake .layout { display: grid; grid-template-columns: 270px minmax(0, 1fr); gap: 1.6rem; align-items: start; }
+/* Let the sideways-scrolling step list shrink instead of stretching the column on phones */
+.intake .layout > * { min-width: 0; }
+
+/* Checklist: numbered discs, current step in the raised 3D green, finished steps in the soft green disc */
+.intake .sidebar { padding: 1.7rem 1.4rem; position: sticky; top: 110px; }
+.intake .sidebar h2 { font-size: 1.45rem; margin-bottom: 1.1rem; }
+.intake .sidebar ol { list-style: none; }
+.intake .sidebar li { display: flex; align-items: center; gap: .75rem; padding: .6rem 0; color: #7d8a7e; font-weight: 700; }
+.intake .sidebar li span { display: grid; place-items: center; width: 34px; height: 34px; flex: none; border-radius: 50%; background: #eef1eb; color: #6a796b; font-size: .9rem; }
+.intake .sidebar li.current { color: var(--green-deep); }
+.intake .sidebar li.current span {
+  background: linear-gradient(180deg, #84C11E 0%, #6FA514 50%, #5A8E10 100%); color: #fff;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.35), inset 0 -2px 0 rgba(40,70,5,.18), 0 6px 12px -4px rgba(76,120,10,.55);
+}
+.intake .sidebar li.done { color: var(--ink-soft); }
+.intake .sidebar li.done span {
+  background: radial-gradient(circle at 32% 28%, #ffffff 0%, #f1f9e4 38%, #dcefbf 75%, #c9e5a2 100%); color: var(--green-deep);
+  box-shadow: inset 0 -2px 4px rgba(92,138,15,.2), 0 4px 8px -4px rgba(76,120,10,.45);
+}
+.intake .help { margin-top: 1.6rem; padding-top: 1.1rem; border-top: 1px solid var(--line); font-size: .9rem; color: var(--ink-soft); }
+.intake .help a { color: var(--blue-deep); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+
+.intake .panel { padding: clamp(1.4rem, 4vw, 2.6rem); }
+.intake .progresshead { display: flex; justify-content: space-between; font-size: .75rem; font-weight: 800; letter-spacing: .12em; color: var(--green-deep); }
+.intake .track { height: 7px; border-radius: 10px; background: #edf1e7; overflow: hidden; margin: .75rem 0 2rem; }
+.intake #bar { height: 100%; width: 16.67%; background: linear-gradient(90deg, var(--green), var(--blue)); transition: width .3s; }
+
+.intake .screenhead { display: flex; gap: 1rem; align-items: center; margin-bottom: .6rem; }
+.intake .stepicon { width: 56px; height: 56px; flex: none; }
+.intake .stepicon svg { width: 26px; height: 26px; }
+.intake .screenhead h2 { font-size: clamp(1.6rem, 2.6vw, 2rem); }
+.intake .hint { color: var(--ink-soft); margin-bottom: 1.5rem; }
+
+/* Fields reuse the contact-form inputs from styles.css */
+.intake .fields { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; }
+.intake .field { margin: 0; min-width: 0; }
+.intake .wide { grid-column: 1 / -1; }
+.intake .field textarea { min-height: 90px; }
+
+/* Yes / No questions */
+.intake .group { padding: 1.2rem 0; border-bottom: 1px solid var(--line); }
+.intake .group:last-child { border: 0; }
+.intake .group-title { font-weight: 700; margin-bottom: .75rem; }
+.intake .options { display: flex; flex-wrap: wrap; gap: .6rem; }
+.intake .choice { position: relative; }
+.intake .choice input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.intake .choice span { display: inline-block; padding: .6rem 1.4rem; border: 1.5px solid var(--line); border-radius: 999px; background: #fff; cursor: pointer; font-weight: 700; transition: border-color .15s ease, background .15s ease; }
+.intake .choice span:hover { border-color: var(--green); }
+.intake .choice input:checked + span { border-color: var(--green); background: var(--green-soft); color: var(--green-deep); }
+.intake .choice input:focus-visible + span { outline: 3px solid var(--blue); outline-offset: 3px; }
+
+.intake .dependent { padding: 1.1rem; border-radius: 14px; margin: 1rem 0; background: #f7fbf2; }
+.intake .dependenthead { display: flex; justify-content: space-between; align-items: center; margin-bottom: .8rem; }
+.intake .smallbtn { background: var(--green-soft); color: var(--green-deep); border: 0; padding: .6rem 1rem; border-radius: 999px; font: inherit; font-weight: 800; cursor: pointer; }
+.intake .smallbtn.remove { background: #f9eeee; color: #a33; }
+
+.intake .checkitem { display: flex; align-items: flex-start; gap: .65rem; padding: .75rem 0; border-bottom: 1px solid var(--line); }
+.intake .checkitem input { margin-top: .35rem; accent-color: var(--green-deep); }
+.intake .filebox { border: 2px dashed #b7d98b; background: #f7fbf2; border-radius: 16px; padding: 1.5rem; text-align: center; }
+.intake .filebox small { display: block; color: var(--ink-soft); margin-top: .5rem; }
+.intake .summary { background: #f7fbf2; border-radius: 14px; padding: 1.1rem 1.2rem; margin: .75rem 0; }
+.intake .summary h3 { font-size: 1.15rem; margin-bottom: .4rem; }
+.intake .summary p { margin: .3rem 0; color: var(--ink-soft); }
+.intake .warning { background: #fff9e7; padding: 1rem; border-radius: 12px; margin-bottom: .5rem; }
+
+.intake .actions { display: flex; justify-content: space-between; gap: .75rem; margin-top: 2rem; }
+.intake .actions .btn:disabled { opacity: .45; cursor: not-allowed; transform: none; }
+.intake .formerror { color: #a52c2c; font-weight: 700; min-height: 1.4rem; margin-top: .75rem; }
+
+@media (max-width: 900px) {
+  .intake .layout { grid-template-columns: 1fr; }
+  .intake .sidebar { position: static; padding: 1rem 1.1rem; }
+  .intake .sidebar h2, .intake .help { display: none; }
+  .intake .sidebar ol { display: flex; overflow-x: auto; gap: 1rem; }
+  .intake .sidebar li { font-size: .8rem; white-space: nowrap; }
+  .intake .sidebar li span { width: 28px; height: 28px; }
+}
+@media (max-width: 560px) {
+  .intake .fields { grid-template-columns: 1fr; }
+  .intake .actions .btn { padding: .8rem 1.2rem; }
+}
