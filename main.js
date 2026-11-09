@@ -243,8 +243,8 @@
     form.addEventListener('submit', function (ev) {
       var endpoint = form.getAttribute('data-endpoint') || '';
       // If no real endpoint is wired up yet, build a mailto and let the browser take over.
-      // Netlify Forms only exists on the deployed site, so local previews use the email fallback
-      var local = location.protocol === 'file:' || /^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname);
+      // Netlify Forms only exists on a Netlify deploy, so local previews and GitHub Pages (including the custom domain) use the email fallback
+      var local = location.protocol === 'file:' || /^(localhost|127\.0\.0\.1|\[::1\])$|\.github\.io$|(^|\.)hildetaxserices\.com$/.test(location.hostname);
       if (!endpoint || endpoint.indexOf('YOUR_FORM_ID') !== -1 || (endpoint === 'netlify' && local)) {
         ev.preventDefault();
         var get = function (n) {
