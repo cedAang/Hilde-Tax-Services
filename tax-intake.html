@@ -10,8 +10,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 <link rel="stylesheet" href="tax-intake.css">
-<link rel="icon" type="image/png" href="assets/logo-mark.png">
-<link rel="apple-touch-icon" href="assets/logo-mark.png">
 </head>
 <body class="page-inner">
 
@@ -81,7 +79,9 @@
     <div class="panel tile" role="region" aria-label="Tax questionnaire">
       <div class="progresshead"><span id="step-label">STEP 1 OF 6</span><span id="percent">17%</span></div>
       <div class="track"><div id="bar"></div></div>
-      <form id="intake" novalidate>
+      <!-- data-endpoint: the Google Apps Script web app URL (ends in /exec); see google-apps-script/SETUP.txt. Empty = submission off. -->
+      <form id="intake" novalidate data-endpoint="">
+        <p class="hp" hidden><label>Leave this empty <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
         <div id="screen" aria-live="polite"></div>
         <div class="actions">
           <button type="button" class="btn btn-ghost" id="previous">&larr; Back</button>

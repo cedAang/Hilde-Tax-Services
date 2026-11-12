@@ -41,6 +41,10 @@
 .intake .fields { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; }
 .intake .field { margin: 0; min-width: 0; }
 .intake .wide { grid-column: 1 / -1; }
+/* Legal name: first, middle, last on one row */
+.intake .group .namehint { margin: -.4rem 0 .9rem; }
+.intake .fields.name3 { grid-template-columns: repeat(3, 1fr); }
+.intake .group:has(.name3) { padding-top: 0; margin-bottom: 1.2rem; }
 .intake .field textarea { min-height: 90px; }
 
 /* Yes / No questions */
@@ -64,6 +68,15 @@
 .intake .checkitem input { margin-top: .35rem; accent-color: var(--green-deep); }
 .intake .filebox { border: 2px dashed #b7d98b; background: #f7fbf2; border-radius: 16px; padding: 1.5rem; text-align: center; }
 .intake .filebox small { display: block; color: var(--ink-soft); margin-top: .5rem; }
+.intake .filebox { position: relative; }
+.intake .filebox.has-error { border-color: #e3a9a9; }
+.intake .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.intake .uploadbtn { margin-top: .4rem; cursor: pointer; }
+.intake .filebox:focus-within .uploadbtn { outline: 3px solid var(--blue); outline-offset: 3px; }
+.intake .filelist { list-style: none; margin: 1rem 0 0; padding: 0; text-align: left; }
+.intake .filelist li { display: flex; align-items: center; gap: .75rem; padding: .55rem 0; border-top: 1px solid var(--line); }
+.intake .filelist .fname { flex: 1; min-width: 0; overflow-wrap: anywhere; font-weight: 600; }
+.intake .filelist .fsize { color: var(--ink-soft); font-size: .85rem; white-space: nowrap; }
 .intake .summary { background: #f7fbf2; border-radius: 14px; padding: 1.1rem 1.2rem; margin: .75rem 0; }
 .intake .summary h3 { font-size: 1.15rem; margin-bottom: .4rem; }
 .intake .summary p { margin: .3rem 0; color: var(--ink-soft); }
@@ -72,6 +85,17 @@
 .intake .actions { display: flex; justify-content: space-between; gap: .75rem; margin-top: 2rem; }
 .intake .actions .btn:disabled { opacity: .45; cursor: not-allowed; transform: none; }
 .intake .formerror { color: #a52c2c; font-weight: 700; min-height: 1.4rem; margin-top: .75rem; }
+
+/* Required markers and inline validation messages (set by validate() in tax-intake.js) */
+.intake .req { color: #a52c2c; font-weight: 800; margin-left: .2rem; }
+.intake .reqnote { font-size: .85rem; color: var(--ink-soft); margin: -.9rem 0 1.4rem; }
+.intake .reqnote .req { margin: 0 .1rem; }
+.intake .screenhead + .reqnote { margin-top: .4rem; }
+.intake .has-error input, .intake .has-error select { border-color: #a52c2c; background: #fffafa; }
+.intake .group.has-error .choice span { border-color: #e3a9a9; }
+.intake .fieldhint { color: var(--ink-soft); font-size: .82rem; margin-top: .35rem; }
+.intake .fielderror { color: #a52c2c; font-size: .85rem; font-weight: 600; margin-top: .4rem; }
+.intake .group .fielderror { margin-top: .6rem; }
 
 @media (max-width: 900px) {
   .intake .layout { grid-template-columns: 1fr; }
@@ -82,6 +106,6 @@
   .intake .sidebar li span { width: 28px; height: 28px; }
 }
 @media (max-width: 560px) {
-  .intake .fields { grid-template-columns: 1fr; }
+  .intake .fields, .intake .fields.name3 { grid-template-columns: 1fr; }
   .intake .actions .btn { padding: .8rem 1.2rem; }
 }
