@@ -115,7 +115,7 @@
     if (next) {
       var mon = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][next.t.getMonth()];
       nextEl.innerHTML = '<span class="util-next__label">Next deadline</span> ' +
-        '<a href="tax-reminders.html">' + (next.d.approximate ? 'Around ' : '') + mon + ' ' + next.t.getDate() + ': ' +
+        '<a href="tax-reminders">' + (next.d.approximate ? 'Around ' : '') + mon + ' ' + next.t.getDate() + ': ' +
         next.d.title.replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }) + '</a>';
       nextEl.hidden = false;
     }
@@ -124,16 +124,18 @@
   // Mobile tab bar: a frosted-glass pill that replaces the hamburger menu on phones and tablets (CSS shows it at 900px
   // and below). It sits right under the header and sticks to the top of the screen while scrolling.
   // The current page's tab is highlighted. Reminders isn't a tab: the utility bar above the header already links it.
-  var page = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
+  // Links use clean URLs (/home, /services ...); normalize "", "index" and any ".html" ending to match them.
+  var page = location.pathname.split('/').pop().toLowerCase().replace(/\.html$/, '');
+  if (!page || page === 'index') page = 'home';
   var tabIcon = function (paths) {
     return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + paths + '</svg>';
   };
   var tabs = [
-    { href: 'index.html', label: 'Home', icon: '<path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V20a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V9.5"/>' },
-    { href: 'services.html', label: 'Services', icon: '<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M3 13h18"/>' },
-    { href: 'about.html', label: 'About', icon: '<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>' },
-    { href: 'tax-intake.html', label: 'Start Taxes', icon: '<path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M12 18v-6"/><path d="M9 15h6"/>' },
-    { href: 'contact.html', label: 'Contact', icon: '<path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/>' }
+    { href: 'home', label: 'Home', icon: '<path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V20a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V9.5"/>' },
+    { href: 'services', label: 'Services', icon: '<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M3 13h18"/>' },
+    { href: 'about', label: 'About', icon: '<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>' },
+    { href: 'tax-intake', label: 'Start Taxes', icon: '<path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M12 18v-6"/><path d="M9 15h6"/>' },
+    { href: 'contact', label: 'Contact', icon: '<path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/>' }
   ];
   var tabBar = document.createElement('nav');
   tabBar.className = 'tab-bar';
@@ -307,8 +309,8 @@
   }
 
   // Quote modal: every [data-quote] button opens "Request your free quote" in a dialog.
-  // Without JS (or <dialog> support) the buttons stay plain links to contact.html.
-  // The form posts as Netlify form "appointment", which is registered by the static copy on contact.html.
+  // Without JS (or <dialog> support) the buttons stay plain links to contact.
+  // The form posts as Netlify form "appointment", which is registered by the static copy on contact.
   var quoteTriggers = document.querySelectorAll('[data-quote]');
   var quoteForm = null;
   if (quoteTriggers.length && typeof HTMLDialogElement === 'function') {
@@ -323,7 +325,7 @@
         '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>' +
       '<h2 id="quote-title">Request your <span>free quote</span></h2>' +
       '<p class="quote-intro">Fill out the form and we&rsquo;ll contact you to confirm your appointment. No obligation.</p>' +
-      '<form class="quote-form" name="appointment" action="thank-you.html" method="POST" data-endpoint="netlify">' +
+      '<form class="quote-form" name="appointment" action="thank-you" method="POST" data-endpoint="netlify">' +
         '<input type="hidden" name="form-name" value="appointment">' +
         '<p hidden><label>Leave this empty: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>' +
         '<div class="form-row">' +
@@ -364,7 +366,7 @@
   }
 
   // Old browsers without <dialog>: the Contact us button goes to the contact page instead
-  if (!quoteForm) chatBtn.addEventListener('click', function () { window.location.href = 'contact.html#appointment'; });
+  if (!quoteForm) chatBtn.addEventListener('click', function () { window.location.href = 'contact#appointment'; });
 
   // Quote forms (contact page + modal): progressive enhancement.
   // Falls back to a pre-filled email if no backend endpoint is configured.
