@@ -2047,63 +2047,33 @@ html.modal-open { overflow: hidden; }
 
 
 /* =========================================
-
-   RESPONSIVE - HORIZONTAL SCROLL
-
-\========================================= */
-
-
-
+   RESPONSIVE - WRAPPING ROWS
+   Below 1400px the seven tiles wrap onto rows (4, then 3, then 2 across) instead of
+   scrolling sideways; flex-wrap + centering keeps a short last row in the middle.
+========================================= */
 @media (max-width: 1399px) {
-
   .svc-grid {
-
     display: flex;
-
-    flex-wrap: nowrap;
-
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 14px;
-
-    overflow-x: auto;
-
-    padding: 12px 4px 24px;
-
-
-
-    scroll-snap-type: x proximity;
-
-    /* The earlier flex rule centers the row; centered overflow pushes the first tiles out of reach */
-    justify-content: flex-start;
-
-    scrollbar-width: thin;
-
-    -webkit-overflow-scrolling: touch;
-
+    overflow: visible;
+    padding: 12px clamp(1rem, 3vw, 2.5rem) 24px; /* keep the tiles off the screen edges */
   }
-
-
-
   .svc-grid > li,
-
   .svc-grid > li:nth-child(n) {
-
-    flex: 0 0 220px;
-
-    scroll-snap-align: start;
-
+    flex: 0 1 calc((100% - 3 * 14px) / 4);
   }
-
-
-
-  .svc-grid .svc-name {
-
-    font-size: 13px;
-
-  }
-
 }
-
-
+@media (max-width: 1100px) {
+  .svc-grid > li,
+  .svc-grid > li:nth-child(n) { flex-basis: calc((100% - 2 * 14px) / 3); }
+}
+@media (max-width: 760px) {
+  .svc-grid > li,
+  .svc-grid > li:nth-child(n) { flex-basis: calc((100% - 14px) / 2); }
+  .svc-grid .svc-name { font-size: 14px; }
+}
 
 /* Phones: stack the tiles as a list instead of a sideways scroller */
 @media (max-width: 560px) {
