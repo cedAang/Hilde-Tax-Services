@@ -58,8 +58,8 @@
   display: inline-flex; flex-wrap: wrap; gap: .35rem; padding: .3rem; border-radius: 999px;
   background: linear-gradient(180deg, rgba(255,255,255,.78) 0%, rgba(246,250,240,.66) 100%);
   border: 1px solid rgba(255,255,255,.8);
-  box-shadow: 0 0 0 1px rgba(20,65,91,.06), 0 10px 24px -12px rgba(20,65,91,.35), 0 3px 8px -2px rgba(20,65,91,.10),
-              inset 0 1.5px 0 #fff, inset 0 -4px 8px -4px rgba(20,65,91,.16);
+/*  box-shadow: 0 0 0 1px rgba(20,65,91,.06), 0 10px 24px -12px rgba(20,65,91,.35), 0 3px 8px -2px rgba(20,65,91,.10),
+              inset 0 1.5px 0 #fff, inset 0 -4px 8px -4px rgba(20,65,91,.16); */
 }
 .intake .choice { position: relative; }
 .intake .choice input { position: absolute; opacity: 0; width: 1px; height: 1px; }
@@ -89,8 +89,29 @@
 
 .intake .dependent { padding: 1.1rem; border-radius: 14px; margin: 1rem 0; background: #f7fbf2; }
 .intake .dependenthead { display: flex; justify-content: space-between; align-items: center; margin-bottom: .8rem; }
-.intake .smallbtn { background: var(--green-soft); color: var(--green-deep); border: 0; padding: .6rem 1rem; border-radius: 999px; font: inherit; font-weight: 800; cursor: pointer; }
-.intake .smallbtn.remove { background: #f9eeee; color: #a33; }
+/* "+ Add a dependent" and "Remove" (dependents and uploaded files) use the same nav pill as the choices above:
+   the raised soft-green pill, a lift on hover, a press-in on click. Remove keeps a red tint so it still reads as destructive. */
+.intake .smallbtn {
+  border: 0; padding: .6rem 1.15rem; border-radius: 999px; font: inherit; font-weight: 800; cursor: pointer;
+  color: var(--green-deep); -webkit-tap-highlight-color: transparent;
+  background: linear-gradient(180deg, rgba(234,244,215,.95) 0%, rgba(220,237,190,.9) 100%);
+  box-shadow: inset 0 1.5px 0 rgba(255,255,255,.9), inset 0 -3px 5px -2px rgba(76,120,10,.22),
+              0 0 0 1px rgba(124,181,24,.25), 0 3px 0 rgba(92,151,24,.18), 0 8px 14px -6px rgba(76,120,10,.35);
+  transition: background .25s ease-out, color .2s ease-out, box-shadow .25s ease-out, transform .2s cubic-bezier(.34,1.56,.64,1);
+}
+.intake .smallbtn:hover { transform: translateY(-1px); }
+.intake .smallbtn:active { transform: scale(.95); }
+.intake .smallbtn:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
+.intake .smallbtn.remove {
+  color: #a33;
+  background: linear-gradient(180deg, rgba(252,238,238,.95) 0%, rgba(246,218,218,.9) 100%);
+  box-shadow: inset 0 1.5px 0 rgba(255,255,255,.9), inset 0 -3px 5px -2px rgba(160,40,40,.18),
+              0 0 0 1px rgba(200,80,80,.22), 0 3px 0 rgba(170,50,50,.15), 0 8px 14px -6px rgba(160,40,40,.3);
+}
+@media (prefers-reduced-motion: reduce) {
+  .intake .smallbtn { transition: none; }
+  .intake .smallbtn:hover, .intake .smallbtn:active { transform: none; }
+}
 
 .intake .checkitem { display: flex; align-items: flex-start; gap: .65rem; padding: .75rem 0; border-bottom: 1px solid var(--line); }
 .intake .checkitem input { margin-top: .35rem; accent-color: var(--green-deep); }
