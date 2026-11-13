@@ -1,0 +1,46 @@
+# This repo is PUBLIC and GitHub Pages publishes every committed file.
+# Commit only website files. Keep notes, tooling and secrets out.
+
+# Internal docs (kept locally, not published)
+CLAUDE.md
+PROMPT-*.md
+*.md
+!README.md
+
+# Private / non-website folders
+promo-video/
+design-demo/
+google-apps-script/
+secure-tools/
+netlify-deploy/
+*.zip
+build-netlify.py
+netlify.toml
+
+# Secrets and keys
+.env
+.env.*
+*.key
+*.pem
+*.p12
+*.pfx
+*credentials*.json
+*secret*
+service-account*.json
+.clasp.json
+.clasprc.json
+
+# Client data must never be committed
+*.csv
+*.xlsx
+*.xls
+*.pdf
+
+# Editor / OS / tooling
+.claude/
+.vscode/
+.idea/
+node_modules/
+Thumbs.db
+desktop.ini
+.DS_Store

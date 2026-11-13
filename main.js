@@ -1,5 +1,13 @@
 /* Hilde Tax Services - shared interactions */
 (function () {
+  // Clickjacking guard: GitHub Pages can't send X-Frame-Options, so break out if another site frames us.
+  // Hide first: browsers often block the redirect silently, and a hidden page can't be used to trick clicks.
+  if (window.top !== window.self) {
+    document.documentElement.style.display = 'none';
+    try { window.top.location.replace(window.location.href); } catch (e) { /* blocked; page stays hidden */ }
+    return;
+  }
+
   // Mobile nav toggle
   var toggle = document.querySelector('.menu-toggle');
   var header = document.querySelector('.site-header');
@@ -365,21 +373,23 @@
     form.addEventListener('submit', function (ev) {
       var endpoint = form.getAttribute('data-endpoint') || '';
       // If no real endpoint is wired up yet, build a mailto and let the browser take over.
-      // Netlify Forms only exists on the deployed site, so local previews use the email fallback
-      var local = location.protocol === 'file:' || /^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname);
-      if (!endpoint || endpoint.indexOf('YOUR_FORM_ID') !== -1 || (endpoint === 'netlify' && local)) {
+      // Netlify Forms only exists on Netlify,
+      // so every other host (local previews, GitHub Pages, the custom domain) uses the email fallback.
+      var onNetlify = /\.netlify\.app$/.test(location.hostname);
+      if (!endpoint || endpoint.indexOf('YOUR_FORM_ID') !== -1 || (endpoint === 'netlify' && !onNetlify)) {
         ev.preventDefault();
-        var get = function (n) {
+        var val = function (n) {
           var el = form.elements[n];
-          return el ? encodeURIComponent(el.value) : '';
+          return el ? String(el.value).trim() : '';
         };
-        var subject = encodeURIComponent('Appointment request - ' + (form.elements['name'] ? form.elements['name'].value : 'New client'));
-        var body =
-          'Name: ' + decodeURIComponent(get('name')) + '%0D%0A' +
-          'Phone: ' + decodeURIComponent(get('phone')) + '%0D%0A' +
-          'Email: ' + decodeURIComponent(get('email')) + '%0D%0A' +
-          'Service: ' + decodeURIComponent(get('service')) + '%0D%0A%0D%0A' +
-          'Message:%0D%0A' + decodeURIComponent(get('message'));
+        // Encode the whole subject and body so characters like & # ? in a message can't cut it short or add mail fields.
+        var subject = encodeURIComponent('Appointment request - ' + (val('name') || 'New client'));
+        var body = encodeURIComponent(
+          'Name: ' + val('name') + '\r\n' +
+          'Phone: ' + val('phone') + '\r\n' +
+          'Email: ' + val('email') + '\r\n' +
+          'Service: ' + val('service') + '\r\n\r\n' +
+          'Message:\r\n' + val('message'));
         window.location.href = 'mailto:BernardMbotchak@hildetaxservice.com?subject=' + subject + '&body=' + body;
       }
       // Otherwise, the form posts to the configured endpoint normally.
