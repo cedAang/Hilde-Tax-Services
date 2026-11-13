@@ -51,13 +51,41 @@
 .intake .group { padding: 1.2rem 0; border-bottom: 1px solid var(--line); }
 .intake .group:last-child { border: 0; }
 .intake .group-title { font-weight: 700; margin-bottom: .75rem; }
-.intake .options { display: flex; flex-wrap: wrap; gap: .6rem; }
+/* Choice pills use the desktop header nav's design (styles.css: ".nav a" and the "3D depth: utility bar, header nav,
+   footer" section): the options sit in a raised frosted track; hover = white lifted pill; selected = the raised soft-green
+   pill with deep-green text. Keep the two in sync if the nav changes. */
+.intake .options {
+  display: inline-flex; flex-wrap: wrap; gap: .35rem; padding: .3rem; border-radius: 999px;
+  background: linear-gradient(180deg, rgba(255,255,255,.78) 0%, rgba(246,250,240,.66) 100%);
+  border: 1px solid rgba(255,255,255,.8);
+  box-shadow: 0 0 0 1px rgba(20,65,91,.06), 0 10px 24px -12px rgba(20,65,91,.35), 0 3px 8px -2px rgba(20,65,91,.10),
+              inset 0 1.5px 0 #fff, inset 0 -4px 8px -4px rgba(20,65,91,.16);
+}
 .intake .choice { position: relative; }
 .intake .choice input { position: absolute; opacity: 0; width: 1px; height: 1px; }
-.intake .choice span { display: inline-block; padding: .6rem 1.4rem; border: 1.5px solid var(--line); border-radius: 999px; background: #fff; cursor: pointer; font-weight: 700; transition: border-color .15s ease, background .15s ease; }
-.intake .choice span:hover { border-color: var(--green); }
-.intake .choice input:checked + span { border-color: var(--green); background: var(--green-soft); color: var(--green-deep); }
-.intake .choice input:focus-visible + span { outline: 3px solid var(--blue); outline-offset: 3px; }
+.intake .choice span {
+  display: inline-block; padding: .6rem 1.15rem; border-radius: 999px; cursor: pointer;
+  color: var(--ink-soft); font-weight: 600; -webkit-tap-highlight-color: transparent;
+  transition: background .25s ease-out, color .2s ease-out, box-shadow .25s ease-out, transform .2s cubic-bezier(.34,1.56,.64,1);
+}
+.intake .choice span:hover {
+  color: var(--green-deep); background: #fff;
+  box-shadow: inset 0 1px 0 #fff, 0 0 0 1px #dbeaf0, 0 4px 10px -4px rgba(20,65,91,.25);
+  transform: translateY(-1px);
+}
+.intake .choice span:active { transform: scale(.95); }
+.intake .choice input:checked + span {
+  color: var(--green-deep); font-weight: 800;
+  background: linear-gradient(180deg, rgba(234,244,215,.95) 0%, rgba(220,237,190,.9) 100%);
+  box-shadow: inset 0 1.5px 0 rgba(255,255,255,.9), inset 0 -3px 5px -2px rgba(76,120,10,.22),
+              0 0 0 1px rgba(124,181,24,.25), 0 3px 0 rgba(92,151,24,.18), 0 8px 14px -6px rgba(76,120,10,.35);
+}
+.intake .choice input:checked + span:hover { transform: translateY(-1px); }
+.intake .choice input:focus-visible + span { outline: 3px solid var(--blue); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) {
+  .intake .choice span { transition: none; }
+  .intake .choice span:hover, .intake .choice span:active, .intake .choice input:checked + span:hover { transform: none; }
+}
 
 .intake .dependent { padding: 1.1rem; border-radius: 14px; margin: 1rem 0; background: #f7fbf2; }
 .intake .dependenthead { display: flex; justify-content: space-between; align-items: center; margin-bottom: .8rem; }
@@ -92,7 +120,7 @@
 .intake .reqnote .req { margin: 0 .1rem; }
 .intake .screenhead + .reqnote { margin-top: .4rem; }
 .intake .has-error input, .intake .has-error select { border-color: #a52c2c; background: #fffafa; }
-.intake .group.has-error .choice span { border-color: #e3a9a9; }
+.intake .has-error .options { border-color: #e3a9a9; box-shadow: 0 0 0 1.5px #e3a9a9, inset 0 1.5px 0 #fff; background: #fffafa; }
 .intake .fieldhint { color: var(--ink-soft); font-size: .82rem; margin-top: .35rem; }
 .intake .fielderror { color: #a52c2c; font-size: .85rem; font-weight: 600; margin-top: .4rem; }
 .intake .group .fielderror { margin-top: .6rem; }
