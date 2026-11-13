@@ -3964,3 +3964,42 @@ html.modal-open { overflow: hidden; }
 
 /* Long email address: let it break instead of pushing past its column on narrow screens */
 .footer-contact a, .footer-contact span, .info-item a, .info-item span { overflow-wrap: anywhere; }
+
+/* Nav pills match the tax-intake choice pills (Yes / No, House / Apartment in tax-intake.css):
+   white pill with a thin outline; hover = green outline; current page = green outline, soft green fill, deep-green text.
+   Flat, no 3D shadow or lift. Change both together so the site keeps one "choice" look. */
+:root { --pill-line: #e4e9de; }
+@media (min-width: 901px) {
+  .site-header .nav {
+    gap: .6rem; padding: 0; border: 0; border-radius: 0;
+    background: none; box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none;
+  }
+  .nav a {
+    padding: .6rem 1.4rem; border: 1.5px solid var(--pill-line); border-radius: 999px;
+    background: #fff; color: var(--ink); font-weight: 700; box-shadow: none;
+    transition: border-color .15s ease, background .15s ease, color .15s ease;
+  }
+  .nav a:hover { border-color: var(--green); background: #fff; color: var(--ink); box-shadow: none; transform: none; }
+  .nav a:active { transform: none; }
+  .nav a.active, .nav a.active:hover {
+    border-color: var(--green); background: var(--green-soft); color: var(--green-deep);
+    font-weight: 700; box-shadow: none; transform: none;
+  }
+  .nav a:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+}
+@media (max-width: 900px) {
+  .tab-bar { gap: 4px; }
+  /* Transparent face (not white) so the sliding lens behind the tabs stays visible while it moves */
+  .tab-bar__item {
+    border: 1.5px solid var(--pill-line); background: transparent;
+    transition: border-color .15s ease, background .15s ease, color .15s ease, transform .2s cubic-bezier(.34,1.56,.64,1);
+  }
+  .tab-bar__item:hover { border-color: var(--green); }
+  .tab-bar__item:active { transform: none; }
+  .tab-bar__item.is-active { border-color: var(--green); background: var(--green-soft); color: var(--green-deep); box-shadow: none; }
+  .tab-bar__item.is-active .tab-bar__label { font-weight: 700; }
+  .tab-bar__item:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
+  /* With the lens, the lens draws the selected pill; at rest it is the same flat soft-green choice pill */
+  .tab-bar.has-lens .tab-bar__item.is-active { background: none; }
+  .tab-bar__lens { background: var(--green-soft); box-shadow: none; }
+}
