@@ -42,6 +42,60 @@
     reveals.forEach(function (el) { el.classList.add('in'); });
   }
 
+  // Services page: card-deck shuffle. When the list scrolls into view, the .svc-row cards appear stacked
+  // as a deck near the top of the list, riffle left and right, then deal out one at a time, in random
+  // order, to their own places. Skipped for reduced motion and when the page opens on a #svc-* anchor
+  // (the visitor wants that card right away).
+  var svcList = document.querySelector('.svc-list');
+  var svcRows = svcList ? Array.prototype.slice.call(svcList.querySelectorAll('.svc-row')) : [];
+  if (svcRows.length > 1 && 'IntersectionObserver' in window && svcList.animate && !location.hash &&
+      !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    svcList.classList.remove('reveal');
+    svcList.classList.add('is-deck');
+    var dealCards = function () {
+      var box = svcList.getBoundingClientRect();
+      var deckX = box.left + box.width / 2;
+      var deckY = box.top + Math.min(box.height / 2, 220);
+      var order = svcRows.map(function (_, i) { return i; });
+      for (var i = order.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = order[i]; order[i] = order[j]; order[j] = t; }
+      var SHUFFLE = 900, DEAL = 650, GAP = 110, done = 0;
+      svcList.classList.remove('is-deck');
+      order.forEach(function (rowIndex, k) {
+        var row = svcRows[rowIndex];
+        var r = row.getBoundingClientRect();
+        var dx = deckX - (r.left + r.width / 2), dy = deckY - (r.top + r.height / 2) - k * 3;
+        var tilt = (Math.random() * 8 - 4).toFixed(1), side = k % 2 ? 1 : -1;
+        var deck = 'translate(' + dx + 'px,' + dy + 'px) rotate(' + tilt + 'deg) scale(.9)';
+        row.style.position = 'relative';
+        row.style.zIndex = String(20 + order.length - k); // the first card dealt is on top of the deck
+        // 1) gather into the deck and riffle: alternate cards slide out to the sides and back
+        var a1 = row.animate([
+          { transform: deck, opacity: 0 },
+          { transform: deck, opacity: 1, offset: .2 },
+          { transform: 'translate(' + (dx + side * Math.min(150, box.width / 4)) + 'px,' + dy + 'px) rotate(' + (side * 9) + 'deg) scale(.9)', offset: .5 },
+          { transform: deck, offset: .8 },
+          { transform: deck, opacity: 1 }
+        ], { duration: SHUFFLE, easing: 'cubic-bezier(.45,.05,.25,1)', fill: 'both' });
+        // 2) deal: fly from the deck to its own place with a little spring, one card after another
+        var a2 = row.animate([
+          { transform: deck, boxShadow: '0 30px 50px -20px rgba(20,65,91,.45)' },
+          { transform: 'none', boxShadow: '0 5px 0 rgba(92,151,24,.10), 0 12px 22px rgba(20,65,91,.08)' }
+        ], { duration: DEAL, delay: SHUFFLE + k * GAP, easing: 'cubic-bezier(.3,1.25,.5,1)', fill: 'forwards' }); // no backwards fill: it would hide the riffle
+        a2.onfinish = function () {
+          a1.cancel(); a2.cancel();
+          row.style.position = ''; row.style.zIndex = '';
+          if (++done === order.length) svcList.classList.add('is-dealt');
+        };
+      });
+    };
+    var deckIO = new IntersectionObserver(function (entries) {
+      if (!entries[0].isIntersecting) return;
+      deckIO.disconnect();
+      dealCards();
+    }, { threshold: 0.12 });
+    deckIO.observe(svcList);
+  }
+
   // Utility bar: "Next deadline" = the first upcoming date in tax-reminders-data.js
   var nextEl = document.querySelector('.util-next');
   if (nextEl && window.TAX_REMINDERS) {
@@ -58,6 +112,74 @@
       nextEl.hidden = false;
     }
   }
+
+  // Mobile tab bar: a frosted-glass pill that replaces the hamburger menu on phones and tablets (CSS shows it at 900px
+  // and below). It sits right under the header and sticks to the top of the screen while scrolling.
+  // The current page's tab is highlighted. Reminders isn't a tab: the utility bar above the header already links it.
+  var page = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
+  var tabIcon = function (paths) {
+    return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + paths + '</svg>';
+  };
+  var tabs = [
+    { href: 'index.html', label: 'Home', icon: '<path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V20a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V9.5"/>' },
+    { href: 'services.html', label: 'Services', icon: '<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M3 13h18"/>' },
+    { href: 'about.html', label: 'About', icon: '<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>' },
+    { href: 'tax-intake.html', label: 'Start Taxes', icon: '<path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/><path d="M12 18v-6"/><path d="M9 15h6"/>' },
+    { href: 'contact.html', label: 'Contact', icon: '<path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/>' }
+  ];
+  var tabBar = document.createElement('nav');
+  tabBar.className = 'tab-bar';
+  tabBar.setAttribute('aria-label', 'Quick navigation');
+  tabBar.innerHTML = tabs.map(function (t) {
+    var here = page === t.href;
+    return '<a class="tab-bar__item' + (here ? ' is-active' : '') + '" href="' + t.href + '"' + (here ? ' aria-current="page"' : '') + '>' +
+      '<span class="tab-bar__icon">' + tabIcon(t.icon) + '</span>' +
+      '<span class="tab-bar__label">' + t.label + '</span></a>';
+  }).join('');
+  if (header) header.insertAdjacentElement('afterend', tabBar);
+  else document.body.appendChild(tabBar);
+  document.documentElement.classList.add('has-tab-bar');
+
+  // Glass lens: the selected pill is one element that slides between tabs. On tap it swells into a
+  // clear glass bubble with a rainbow rim (bulging past the bar), glides to the new tab, settles back
+  // into the green pill, and then the page changes.
+  var lens = document.createElement('span');
+  lens.className = 'tab-bar__lens';
+  lens.setAttribute('aria-hidden', 'true');
+  tabBar.insertBefore(lens, tabBar.firstChild);
+  tabBar.classList.add('has-lens');
+  var tabItems = Array.prototype.slice.call(tabBar.querySelectorAll('.tab-bar__item'));
+  var currentTab = tabBar.querySelector('.tab-bar__item.is-active');
+  var placeLens = function (el, instant) {
+    if (!el || !el.offsetWidth) return;
+    if (instant) lens.style.transition = 'none';
+    lens.style.width = el.offsetWidth + 'px';
+    lens.style.setProperty('--x', el.offsetLeft + 'px');
+    if (instant) { void lens.offsetWidth; lens.style.transition = ''; }
+  };
+  var resetLens = function () {
+    tabBar.classList.remove('is-moving');
+    tabItems.forEach(function (a) { a.classList.toggle('is-active', a === currentTab); a.classList.remove('is-lensing'); });
+    lens.classList.toggle('is-shown', !!currentTab);
+    placeLens(currentTab, true);
+  };
+  resetLens();
+  window.addEventListener('resize', function () { placeLens(tabBar.querySelector('.tab-bar__item.is-active'), true); });
+  window.addEventListener('pageshow', function (ev) { if (ev.persisted) resetLens(); }); // back/forward cache
+  tabItems.forEach(function (a) {
+    a.addEventListener('click', function (ev) {
+      if (a === currentTab || ev.metaKey || ev.ctrlKey || ev.shiftKey || ev.altKey || ev.button !== 0) return;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !a.offsetWidth) return;
+      ev.preventDefault();
+      if (!lens.classList.contains('is-shown')) { placeLens(a, true); lens.classList.add('is-shown'); }
+      tabItems.forEach(function (b) { b.classList.toggle('is-active', b === a); b.classList.remove('is-lensing'); });
+      a.classList.add('is-lensing');
+      tabBar.classList.add('is-moving');
+      placeLens(a);
+      window.setTimeout(function () { tabBar.classList.remove('is-moving'); a.classList.remove('is-lensing'); }, 420);
+      window.setTimeout(function () { window.location.href = a.href; }, 560);
+    });
+  });
 
   // Floating buttons (ported from the school site): Share bottom-left, Contact us + Back to top bottom-right.
   var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -243,8 +365,8 @@
     form.addEventListener('submit', function (ev) {
       var endpoint = form.getAttribute('data-endpoint') || '';
       // If no real endpoint is wired up yet, build a mailto and let the browser take over.
-      // Netlify Forms only exists on a Netlify deploy, so local previews and GitHub Pages (including the custom domain) use the email fallback
-      var local = location.protocol === 'file:' || /^(localhost|127\.0\.0\.1|\[::1\])$|\.github\.io$|(^|\.)hildetaxserices\.com$/.test(location.hostname);
+      // Netlify Forms only exists on the deployed site, so local previews use the email fallback
+      var local = location.protocol === 'file:' || /^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname);
       if (!endpoint || endpoint.indexOf('YOUR_FORM_ID') !== -1 || (endpoint === 'netlify' && local)) {
         ev.preventDefault();
         var get = function (n) {
@@ -258,7 +380,7 @@
           'Email: ' + decodeURIComponent(get('email')) + '%0D%0A' +
           'Service: ' + decodeURIComponent(get('service')) + '%0D%0A%0D%0A' +
           'Message:%0D%0A' + decodeURIComponent(get('message'));
-        window.location.href = 'mailto:hildetaxservices@gmail.com?subject=' + subject + '&body=' + body;
+        window.location.href = 'mailto:BernardMbotchak@hildetaxservice.com?subject=' + subject + '&body=' + body;
       }
       // Otherwise, the form posts to the configured endpoint normally.
     });
