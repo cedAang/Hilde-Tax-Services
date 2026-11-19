@@ -78,8 +78,8 @@ if(step===5&&submitted)html=head('Thank you!',`Your answers${files.length?' and 
 screen.innerHTML=html;screen.querySelectorAll('input[type=radio]').forEach(el=>el.addEventListener('change',()=>{capture();render()}));screen.querySelector('#marital')?.addEventListener('change',()=>{capture();render();screen.querySelector('#marital').focus()});screen.querySelector('#uploads')?.addEventListener('change',ev=>{capture();addFiles(ev.target.files);ev.target.value='';render();screen.querySelector('#uploads')?.focus()});screen.querySelectorAll('[data-unfile]').forEach(btn=>btn.addEventListener('click',()=>{capture();files.splice(Number(btn.dataset.unfile),1);delete errors.uploads;render()}));screen.querySelector('#add-dependent')?.addEventListener('click',()=>{capture();dependents++;render()});screen.querySelectorAll('[data-remove]').forEach(btn=>btn.addEventListener('click',()=>{capture();const i=Number(btn.dataset.remove);for(let j=i;j<dependents-1;j++)for(const k of ['name','dob','relationship','months'])data['dep'+j+k]=data['dep'+(j+1)+k];dependents--;for(const k in errors)if(k.startsWith('dep'))delete errors[k];render()}));}
 // Fixing a field clears its message right away; the rest stay until the next Continue
 screen.addEventListener('input',ev=>{const k=ev.target.name;if(!errors[k])return;delete errors[k];const box=ev.target.closest('.has-error'),inv=ev.target.closest('[aria-invalid]');box?.classList.remove('has-error');inv?.removeAttribute('aria-invalid');if(document.getElementById(k+'-hint'))inv?.setAttribute('aria-describedby',k+'-hint');else inv?.removeAttribute('aria-describedby');document.getElementById(k+'-err')?.remove();if(!Object.keys(errors).length)document.querySelector('#formerror').textContent=''});
-document.querySelector('#previous').addEventListener('click',()=>{capture();errors={};if(step>0)step--;render();window.scrollTo({top:0,behavior:'smooth'})});
-document.querySelector('#next').addEventListener('click',()=>{capture();errors=validate();const n=Object.keys(errors).length;if(n){render();document.querySelector('#formerror').textContent=n===1?'Please fix the highlighted field to continue.':`Please fix the ${n} highlighted fields to continue.`;const first=screen.querySelector('[aria-invalid="true"]');first.scrollIntoView({block:'center',behavior:'smooth'});(first.matches('[role=radiogroup]')?first.querySelector('input'):first).focus({preventScroll:true});return}if(step<5){step++;render();window.scrollTo({top:0,behavior:'smooth'})}else submit()});
+document.querySelector('#previous').addEventListener('click',()=>{capture();errors={};if(step>0)step--;render();toIntake(true)});
+document.querySelector('#next').addEventListener('click',()=>{capture();errors=validate();const n=Object.keys(errors).length;if(n){render();document.querySelector('#formerror').textContent=n===1?'Please fix the highlighted field to continue.':`Please fix the ${n} highlighted fields to continue.`;const first=screen.querySelector('[aria-invalid="true"]');first.scrollIntoView({block:'center',behavior:'smooth'});(first.matches('[role=radiogroup]')?first.querySelector('input'):first).focus({preventScroll:true});return}if(step<5){step++;render();toIntake(true)}else submit()});
 document.querySelector('#intake').addEventListener('submit',ev=>ev.preventDefault());render();
 
 // The answers as one flat {column title: value} object; the Apps Script adds a Sheet column for each new title
@@ -99,7 +99,7 @@ if(!endpoint){msg.textContent='Online submission isn’t connected yet. Please c
 btn.disabled=true;btn.textContent=files.length?'Uploading…':'Sending…';msg.textContent='';
 try{// text/plain body keeps this a "simple" request, so the browser doesn't need a CORS preflight that Apps Script can't answer
 const res=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({record:buildRecord(),files:await Promise.all(files.map(readFile)),botField:form.querySelector('[name=bot-field]').value})});
-const out=await res.json();if(!out.ok)throw new Error(out.error||'Not saved');submitted=true;render();window.scrollTo({top:0,behavior:'smooth'})}
+const out=await res.json();if(!out.ok)throw new Error(out.error||'Not saved');submitted=true;render();toIntake(true)}
 catch(err){btn.disabled=false;btn.textContent='Submit my answers';msg.textContent='We couldn’t send your answers. Please try again, or call or text us at 682-706-5182.'}}
 // Adds picked files, skipping duplicates and anything over the limits (with one message explaining why)
 function addFiles(list){const skipped=[];delete errors.uploads;for(const f of list){const total=files.reduce((n,x)=>n+x.size,0);
@@ -111,3 +111,10 @@ else if(total+f.size>MAX_TOTAL)skipped.push(`${f.name} (over 25 MB in total)`);
 else files.push(f)}
 if(skipped.length)errors.uploads='Not added: '+skipped.join('; ')+'.'}
 const readFile=f=>new Promise((ok,fail)=>{const r=new FileReader();r.onload=()=>ok({name:f.name,type:f.type,data:String(r.result).split(',')[1]});r.onerror=()=>fail(r.error);r.readAsDataURL(f)});
+// Land on the questionnaire, not the hero: every "Start My Taxes" link (header, footer, mobile tab bar) opens here.
+// The offset clears whatever is sticky at the top (the header on desktop, the tab bar on mobile).
+const toIntake=smooth=>{const box=document.querySelector('.intake .layout');if(!box)return;let off=0;
+document.querySelectorAll('.site-header,.tab-bar').forEach(el=>{const cs=getComputedStyle(el);if(cs.position==='sticky'&&cs.display!=='none')off=Math.max(off,(parseFloat(cs.top)||0)+el.offsetHeight)});
+window.scrollTo({top:Math.max(0,box.getBoundingClientRect().top+window.scrollY-off-16),behavior:smooth&&!matchMedia('(prefers-reduced-motion: reduce)').matches?'smooth':'auto'})};
+if(!location.hash){if('scrollRestoration' in history)history.scrollRestoration='manual';toIntake(false);
+const landed=window.scrollY;window.addEventListener('load',()=>{if(window.scrollY===landed)toIntake(false)},{once:true})}
