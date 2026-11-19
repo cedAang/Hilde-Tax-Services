@@ -116,5 +116,5 @@ const readFile=f=>new Promise((ok,fail)=>{const r=new FileReader();r.onload=()=>
 const toIntake=smooth=>{const box=document.querySelector('.intake .layout');if(!box)return;let off=0;
 document.querySelectorAll('.site-header,.tab-bar').forEach(el=>{const cs=getComputedStyle(el);if(cs.position==='sticky'&&cs.display!=='none')off=Math.max(off,(parseFloat(cs.top)||0)+el.offsetHeight)});
 window.scrollTo({top:Math.max(0,box.getBoundingClientRect().top+window.scrollY-off-16),behavior:smooth&&!matchMedia('(prefers-reduced-motion: reduce)').matches?'smooth':'auto'})};
-if(!location.hash){if('scrollRestoration' in history)history.scrollRestoration='manual';toIntake(false);
+if(!location.hash||location.hash==='#questionnaire'){if('scrollRestoration' in history)history.scrollRestoration='manual';toIntake(false);
 const landed=window.scrollY;window.addEventListener('load',()=>{if(window.scrollY===landed)toIntake(false)},{once:true})}
